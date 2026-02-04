@@ -32,6 +32,7 @@ const Header = () => {
                     { label: 'Customers', path: '/admin/customers' },
                     { label: 'Users', path: '/admin/users' },
                     { label: 'Chambers', path: '/admin/chambers' },
+                    { label: 'Issues', path: '/admin/issues' },
                 ];
             case 'Engineer':
                 return [

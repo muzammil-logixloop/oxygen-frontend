@@ -22,6 +22,7 @@ import Chambers from '../pages/admin/Chambers';
 import Users from '../pages/admin/Users';
 import EngineerDashboard from '../pages/engineer/Dashboard';
 import MyChambers from '../pages/operator/MyChambers';
+import Issues from '../pages/admin/Issues';
 
 const AppRoutes = () => {
     return (
@@ -57,6 +58,7 @@ const AppRoutes = () => {
                         <Route path="/admin/customers" element={<Customers />} />
                         <Route path="/admin/chambers" element={<Chambers />} />
                         <Route path="/admin/users" element={<Users />} />
+                        <Route path="/admin/issues" element={<Issues />} />
                     </Route>
 
                     {/* Engineer Routes */}
