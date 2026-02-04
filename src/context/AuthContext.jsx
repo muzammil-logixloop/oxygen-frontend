@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, logoutUser, getMe } from '../services/authService';
-import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -13,25 +12,41 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initAuth = async () => {
             const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const userData = await getMe();
-                    setUser(userData);
-                } catch (error) {
-                    console.error("Auth initialization failed", error);
-                    logoutUser();
-                }
+
+            if (!token) {
+                setLoading(false);
+                return;
             }
+
+            try {
+                const userData = await getMe();
+
+                // Normalize role structure
+                const normalizedUser = {
+                    ...userData,
+                    role: userData.Role?.name
+                };
+
+                setUser(normalizedUser);
+            } catch (error) {
+                console.error("Auth initialization failed", error);
+                localStorage.removeItem('token');
+                setUser(null);
+            }
+
             setLoading(false);
         };
+
         initAuth();
     }, []);
 
     const login = async (email, password) => {
         const data = await loginUser(email, password);
         localStorage.setItem('token', data.token);
-        // Decode token or use response user data. For simplicity, use response.
-        // If we want exact persistence, we can rely on getMe, but response is faster.
+
+        // Normalize user from login response as well
+        
+
         setUser(data.user);
         return data.user;
     };

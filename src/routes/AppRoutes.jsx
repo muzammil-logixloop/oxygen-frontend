@@ -21,6 +21,7 @@ import Customers from '../pages/admin/Customers';
 import Chambers from '../pages/admin/Chambers';
 import Users from '../pages/admin/Users';
 import EngineerDashboard from '../pages/engineer/Dashboard';
+import MyChambers from '../pages/operator/MyChambers';
 
 const AppRoutes = () => {
     return (
@@ -38,7 +39,7 @@ const AppRoutes = () => {
                     <Route element={<RoleGuard allowedRoles={['Operator']} />}>
                         <Route path="/operator" element={<OperatorDashboard />} />
                         <Route path="/operator/profile" element={<Profile />} />
-                        {/* <Route path="/operator/checklists" element={<MyChambers />} /> Reusing MyChambers as main entry for now, or create separate listing */}
+                        <Route path="/operator/checklists" element={<MyChambers />} /> Reusing MyChambers as main entry for now, or create separate listing
                         <Route path="/operator/checklist/:chamberId" element={<ChecklistForm />} />
                         <Route path="/operator/report-issue/:chamberId" element={<IssueReport />} />
                     </Route>
