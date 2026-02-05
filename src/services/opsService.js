@@ -10,16 +10,6 @@ export const getChamberDetails = async (id) => {
     return response.data;
 };
 
-// export const submitChecklist = async (formData) => {
-//     // formData must be FormData object if file included
-//     const response = await apiClient.post('/ops/checklists', formData, {
-//         headers: {
-//             'Content-Type': 'multipart/form-data',
-//         },
-//     });
-//     return response.data;
-// };
-
 export const reportIssue = async (formData) => {
     const response = await apiClient.post('/ops/issues', formData, {
         headers: {
@@ -35,7 +25,16 @@ export const getChecklistTemplate = async (type) => {
   return res.data;
 };
 
-export const submitChecklist = async (payload) => {
-  const res = await apiClient.post('/ops/checklists/submit', payload);
+export const submitChecklist = async (payload, isFormData = false) => {
+  const res = await apiClient.post('/ops/checklists/submit', payload, {
+    headers: {
+      'Content-Type': isFormData ? 'multipart/form-data' : 'application/json'
+    }
+  });
+  return res.data;
+};
+
+export const getMyChecklists = async () => {
+  const res = await apiClient.get('/ops/checklists/my-submissions'); // adjust the path if different
   return res.data;
 };
