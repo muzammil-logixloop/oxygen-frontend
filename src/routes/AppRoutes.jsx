@@ -24,6 +24,7 @@ import EngineerDashboard from '../pages/engineer/Dashboard';
 import MyChambers from '../pages/operator/MyChambers';
 import Issues from '../pages/admin/Issues';
 import MyChecklists from '../pages/operator/MyChecklists';
+import Myissues from '../pages/engineer/Myissues';
 
 const AppRoutes = () => {
     return (
@@ -67,6 +68,7 @@ const AppRoutes = () => {
                     <Route element={<RoleGuard allowedRoles={['Engineer']} />}>
                         <Route path="/engineer" element={<EngineerDashboard />} />
                         <Route path="/engineer/profile" element={<Profile />} />
+                        <Route path="/engineer/my-issues" element={<Myissues />} />
                     </Route>
 
                 </Route>

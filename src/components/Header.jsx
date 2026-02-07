@@ -38,7 +38,8 @@ const Header = () => {
             case 'Engineer':
                 return [
                     { label: 'Dashboard', path: '/engineer' },
-                    { label: 'My Issues', path: '/engineer/issues' },
+                    { label: 'My Issues', path: '/engineer/my-issues' },
+
                 ];
             default:
                 return [];

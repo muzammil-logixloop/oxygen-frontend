@@ -38,3 +38,8 @@ export const getMyChecklists = async () => {
   const res = await apiClient.get('/ops/checklists/my-submissions'); // adjust the path if different
   return res.data;
 };
+
+export const getMyIssues = async () => {
+  const res = await apiClient.get("/ops/issues/my");
+  return res.data;
+};

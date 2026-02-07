@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChamberDetails, reportIssue } from '../../services/opsService';
-import { AlertTriangle, Upload, ArrowLeft, Camera, CheckCircle } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Camera, CheckCircle } from 'lucide-react';
 
 const IssueReport = () => {
     const { chamberId } = useParams();
     const navigate = useNavigate();
+
     const [chamber, setChamber] = useState(null);
+
     const [formData, setFormData] = useState({
-        title: '', description: '', priority: 'Medium'
+        title: '',
+        description: '',
+        category: 'Other',
+        severity: 'Minor',
+        doNotOperateRecommended: false
     });
-    const [file, setFile] = useState(null);
+
+    const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -27,24 +34,36 @@ const IssueReport = () => {
         }
     };
 
+    const handleFileChange = (e) => {
+        setFiles([...e.target.files]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         const data = new FormData();
+
         data.append('chamberId', chamberId);
         data.append('title', formData.title);
         data.append('description', formData.description);
-        data.append('priority', formData.priority);
-        if (file) data.append('evidence', file);
+        data.append('category', formData.category);
+        data.append('severity', formData.severity);
+        data.append('doNotOperateRecommended', formData.doNotOperateRecommended);
+
+        files.forEach((file) => {
+            data.append('uploads', file);
+        });
 
         try {
             await reportIssue(data);
+
             alert('Issue reported successfully. An engineer will be notified.');
+
             navigate('/operator');
         } catch (err) {
-            setError('Failed to report issue.');
+            setError(err?.response?.data?.message || 'Failed to report issue.');
         } finally {
             setLoading(false);
         }
@@ -54,7 +73,10 @@ const IssueReport = () => {
 
     return (
         <div className="max-w-3xl mx-auto">
-            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-white mb-4 flex items-center space-x-2">
+            <button
+                onClick={() => navigate(-1)}
+                className="text-slate-400 hover:text-white mb-4 flex items-center space-x-2"
+            >
                 <ArrowLeft size={20} />
                 <span>Back</span>
             </button>
@@ -65,19 +87,29 @@ const IssueReport = () => {
                         <AlertTriangle className="text-red-500" />
                         <span>Report Issue / Fault</span>
                     </h1>
-                    <p className="text-slate-400">{chamber.modelName} (SN: {chamber.serialNumber})</p>
+                    <p className="text-slate-400">
+                        {chamber.modelName} (SN: {chamber.serialNumber})
+                    </p>
                 </div>
 
-                {error && <div className="bg-red-500/20 text-red-200 p-4 rounded-lg mb-6">{error}</div>}
+                {error && (
+                    <div className="bg-red-500/20 text-red-200 p-4 rounded-lg mb-6">
+                        {error}
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">Issue Title</label>
+                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                            Issue Title
+                        </label>
                         <input
                             type="text"
                             value={formData.title}
-                            onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+                            onChange={(e) =>
+                                setFormData({ ...formData, title: e.target.value })
+                            }
+                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
                             placeholder="e.g., Door seal leaking"
                             required
                         />
@@ -85,43 +117,103 @@ const IssueReport = () => {
 
                     <div className="grid grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-2">Priority Level</label>
+                            <label className="block text-sm font-medium text-slate-400 mb-2">
+                                Issue Category
+                            </label>
+
                             <select
-                                value={formData.priority}
-                                onChange={e => setFormData({ ...formData, priority: e.target.value })}
-                                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+                                value={formData.category}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, category: e.target.value })
+                                }
+                                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
                             >
-                                <option value="Low">Low - Minor cosmetic issue</option>
-                                <option value="Medium">Medium - Needs attention soon</option>
-                                <option value="High">High - Affects operation</option>
-                                <option value="Critical">Critical - Safety hazard</option>
+                                <option value="Leak">Leak</option>
+                                <option value="Zip">Zip</option>
+                                <option value="Door">Door</option>
+                                <option value="Window">Window</option>
+                                <option value="Valves">Valves</option>
+                                <option value="Gauge">Gauge</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="Noise">Noise</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-400 mb-2">
+                                Severity Level
+                            </label>
+
+                            <select
+                                value={formData.severity}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, severity: e.target.value })
+                                }
+                                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
+                            >
+                                <option value="Info">Info</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Urgent">Urgent</option>
+                                <option value="SafetyCritical">
+                                    Safety Critical
+                                </option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">Detailed Description</label>
+                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                            Detailed Description
+                        </label>
+
                         <textarea
                             value={formData.description}
-                            onChange={e => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white h-32 resize-none focus:border-red-500 focus:outline-none"
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    description: e.target.value
+                                })
+                            }
+                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white h-32 resize-none"
                             placeholder="Describe the problem in detail..."
                             required
                         />
                     </div>
 
+                    <div className="flex items-center space-x-3 bg-red-500/10 p-4 rounded-lg">
+                        <input
+                            type="checkbox"
+                            checked={formData.doNotOperateRecommended}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    doNotOperateRecommended: e.target.checked
+                                })
+                            }
+                            className="h-5 w-5"
+                        />
+                        <span className="text-red-200">
+                            Recommend Do Not Operate until resolved
+                        </span>
+                    </div>
+
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">Evidence (Photo/Video)</label>
-                        <div className="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-red-500/50 transition-colors cursor-pointer relative">
+                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                            Upload Evidence (Photos / Videos)
+                        </label>
+
+                        <div className="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center relative">
                             <input
                                 type="file"
-                                onChange={e => setFile(e.target.files[0])}
+                                multiple
+                                onChange={handleFileChange}
                                 className="absolute inset-0 opacity-0 cursor-pointer"
                             />
-                            {file ? (
-                                <div className="text-red-400 font-medium flex items-center justify-center space-x-2">
-                                    <CheckCircle size={20} />
-                                    <span>{file.name}</span>
+
+                            {files.length > 0 ? (
+                                <div className="text-red-400 font-medium">
+                                    {files.length} file(s) selected
                                 </div>
                             ) : (
                                 <div className="text-slate-500 flex flex-col items-center">
@@ -135,7 +227,7 @@ const IssueReport = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-600/20 disabled:opacity-50"
+                        className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-xl disabled:opacity-50"
                     >
                         {loading ? 'Submitting...' : 'Submit Issue Report'}
                     </button>
