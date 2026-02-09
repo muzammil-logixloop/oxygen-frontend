@@ -1,14 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Database, Settings, User } from 'lucide-react';
+import { Users, Database, User } from 'lucide-react';
+import { statstics } from '../../services/adminService';
 
 const Dashboard = () => {
-    const stats = [
-        { label: 'Total Customers', value: '12', color: 'text-white', bg: 'bg-slate-700' },
-        { label: 'Active Chambers', value: '45', color: 'text-blue-400', bg: 'bg-blue-500/10' },
-        { label: 'Open Issues', value: '7', color: 'text-red-400', bg: 'bg-red-500/10' },
-        { label: 'System Health', value: '99%', color: 'text-green-400', bg: 'bg-green-500/10' },
-    ];
+    const [stats, setStats] = React.useState([]);
+
+    React.useEffect(() => { 
+        const fetchStats = async () => {
+            try {
+                const data = await statstics();
+
+                const statsArray = [
+                    { label: 'Total Users', value: data.userCount, color: 'text-white' },
+                    { label: 'Total Customers', value: data.customerCount, color: 'text-blue-400' },
+                    { label: 'Total Chambers', value: data.chamberCount, color: 'text-purple-400' },
+                    { label: 'Suspended Chambers', value: data.suspendedChamberCount, color: 'text-red-400' },
+                    { label: 'Open Issues', value: data.openIssuesCount, color: 'text-yellow-400' },
+                    { label: 'Closed Issues', value: data.closedIssuesCount, color: 'text-green-400' }
+                ];
+
+                setStats(statsArray);
+            } catch (error) {
+                console.error('Error fetching dashboard stats:', error);
+            }
+        };
+        fetchStats();
+    }, []);
 
     return (
         <div>
