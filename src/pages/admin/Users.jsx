@@ -129,6 +129,7 @@ const Users = () => {
                                         <Edit3 size={18} />
                                     </button>
                                     <button
+                                    // ✅ Add delete functionality
                                         onClick={() => handleDelete(user.id)}
                                         className="text-slate-500 hover:text-red-400 transition-colors"
                                         title="Delete User"
