@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, ArrowRight } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,26 +28,28 @@ const Login = () => {
                 default: navigate('/');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+            const errorMessage = err.response?.data?.message || 'Login failed. Please check your credentials.';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4">
-            <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+            <div className="max-w-md w-full bg-surface rounded-2xl shadow-2xl border border-border overflow-hidden">
 
                 <div className="p-8">
                     <div className="text-center mb-10">
-                        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+                        <h1 className="text-4xl font-extrabold text-text-main tracking-tight mb-2">
                             Welcome Back
                         </h1>
-                        <p className="text-slate-300">Sign in to Oxygens Chamber Portal</p>
+                        <p className="text-text-muted">Sign in to Oxygens Chamber Portal</p>
                     </div>
 
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg mb-6 text-sm flex items-center">
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                             </svg>
@@ -56,16 +59,16 @@ const Login = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                            <label className="text-sm font-medium text-text-muted ml-1">Email Address</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-emerald-600 transition-colors">
                                     <Mail size={20} />
                                 </div>
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white placeholder-slate-500 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="name@company.com"
                                     required
                                 />
@@ -73,16 +76,16 @@ const Login = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
+                            <label className="text-sm font-medium text-text-muted ml-1">Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-emerald-600 transition-colors">
                                     <Lock size={20} />
                                 </div>
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white placeholder-slate-500 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="••••••••"
                                     required
                                 />
@@ -90,17 +93,17 @@ const Login = () => {
                         </div>
 
                         <div className="flex items-center justify-between text-sm">
-                            <label className="flex items-center text-slate-300 cursor-pointer">
-                                <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500 rounded border-slate-600 bg-slate-700/50 focus:ring-blue-500 focus:ring-offset-slate-900" />
+                            <label className="flex items-center text-text-muted cursor-pointer">
+                                <input type="checkbox" className="form-checkbox h-4 w-4 text-emerald-600 rounded border-border bg-white focus:ring-emerald-500 focus:ring-offset-white" />
                                 <span className="ml-2">Remember me</span>
                             </label>
-                            <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">Forgot password?</a>
+                            <a href="#" className="text-emerald-600 hover:text-emerald-500 transition-colors">Forgot password?</a>
                         </div>
 
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -117,10 +120,10 @@ const Login = () => {
                     </form>
                 </div>
 
-                <div className="px-8 py-6 bg-slate-800/30 border-t border-white/10 text-center">
-                    <p className="text-slate-400">
+                <div className="px-8 py-6 bg-emerald-50/50 border-t border-border text-center">
+                    <p className="text-text-muted">
                         Don't have an account?{' '}
-                        <Link to="/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors hover:underline decoration-blue-400/50 underline-offset-4">
+                        <Link to="/signup" className="text-emerald-600 hover:text-emerald-500 font-medium transition-colors hover:underline decoration-emerald-600/30 underline-offset-4">
                             Create Account
                         </Link>
                     </p>

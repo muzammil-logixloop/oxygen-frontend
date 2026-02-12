@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { signupUser } from '../../services/authService';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, Lock, Mail, ArrowRight, CheckCircle } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -26,9 +27,12 @@ const Signup = () => {
         try {
             await signupUser(formData.username, formData.email, formData.password);
             setMessage('Account created successfully!');
+            toast.success('Account created successfully! Redirecting to login...');
             setTimeout(() => navigate('/login'), 2000);
         } catch (err) {
-            setError(err.response?.data?.message || 'Signup failed. Please try again.');
+            const errorMessage = err.response?.data?.message || 'Signup failed. Please try again.';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -36,42 +40,42 @@ const Signup = () => {
 
     if (message) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4">
-                <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8 text-center animate-fade-in">
-                    <div className="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="min-h-screen flex items-center justify-center bg-background p-4">
+                <div className="max-w-md w-full bg-surface rounded-2xl shadow-2xl border border-border p-8 text-center animate-fade-in">
+                    <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
                         <CheckCircle size={32} />
                     </div>
-                    <h2 className="text-2xl font-bold text-white mb-2">Success!</h2>
-                    <p className="text-slate-300 mb-6">{message}</p>
-                    <p className="text-sm text-slate-500">Redirecting to login...</p>
+                    <h2 className="text-2xl font-bold text-text-main mb-2">Success!</h2>
+                    <p className="text-text-muted mb-6">{message}</p>
+                    <p className="text-sm text-text-muted">Redirecting to login...</p>
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4">
-            <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+            <div className="max-w-md w-full bg-surface rounded-2xl shadow-2xl border border-border overflow-hidden">
 
                 <div className="p-8">
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2">
+                        <h1 className="text-3xl font-extrabold text-text-main tracking-tight mb-2">
                             Create Account
                         </h1>
-                        <p className="text-slate-300">Join Oxygens Chamber Portal today</p>
+                        <p className="text-text-muted">Join Oxygens Chamber Portal today</p>
                     </div>
 
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg mb-6 text-sm flex items-center">
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm flex items-center">
                             <span className="font-bold mr-2">Error:</span> {error}
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300 ml-1">Username</label>
+                            <label className="text-sm font-medium text-text-muted ml-1">Username</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
                                     <User size={20} />
                                 </div>
                                 <input
@@ -79,7 +83,7 @@ const Signup = () => {
                                     name="username"
                                     value={formData.username}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white placeholder-slate-500 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="Choose a username"
                                     required
                                 />
@@ -87,9 +91,9 @@ const Signup = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                            <label className="text-sm font-medium text-text-muted ml-1">Email Address</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
                                     <Mail size={20} />
                                 </div>
                                 <input
@@ -97,7 +101,7 @@ const Signup = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white placeholder-slate-500 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="name@company.com"
                                     required
                                 />
@@ -105,9 +109,9 @@ const Signup = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
+                            <label className="text-sm font-medium text-text-muted ml-1">Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
                                     <Lock size={20} />
                                 </div>
                                 <input
@@ -115,7 +119,7 @@ const Signup = () => {
                                     name="password"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white placeholder-slate-500 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="Create a strong password"
                                     required
                                 />
@@ -125,7 +129,7 @@ const Signup = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                         >
                             {isLoading ? (
                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -142,10 +146,10 @@ const Signup = () => {
                     </form>
                 </div>
 
-                <div className="px-8 py-6 bg-slate-800/30 border-t border-white/10 text-center">
-                    <p className="text-slate-400">
+                <div className="px-8 py-6 bg-emerald-50/50 border-t border-border text-center">
+                    <p className="text-text-muted">
                         Already have an account?{' '}
-                        <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors hover:underline decoration-blue-400/50 underline-offset-4">
+                        <Link to="/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors hover:underline decoration-emerald-400/50 underline-offset-4">
                             Sign In
                         </Link>
                     </p>

@@ -23,23 +23,23 @@ const MyChambers = () => {
     return (
         <div>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">My Chambers</h1>
-                <p className="text-slate-400">Select a chamber to perform checks or report issues.</p>
+                <h1 className="text-3xl font-bold text-text-main mb-2">My Chambers</h1>
+                <p className="text-text-muted">Select a chamber to perform checks or report issues.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {chambers.map(chamber => (
-                    <div key={chamber.id} className="bg-slate-800/50 border border-white/5 p-6 rounded-2xl hover:border-blue-500/30 transition-all">
+                    <div key={chamber.id} className="bg-surface border border-border p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
                         <div className="flex items-start justify-between mb-4">
-                            <div className="bg-blue-500/20 p-3 rounded-lg text-blue-400">
+                            <div className="bg-blue-50 p-3 rounded-lg text-blue-600">
                                 <Box size={24} />
                             </div>
-                            <span className={`text-xs px-2 py-1 rounded border ${chamber.warrantyStatus === 'Active' ? 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10' : 'text-red-400 border-red-500/30 bg-red-500/10'}`}>
+                            <span className={`text-xs px-2 py-1 rounded border ${chamber.warrantyStatus === 'Active' ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'text-red-700 border-red-200 bg-red-50'}`}>
                                 {chamber.warrantyStatus}
                             </span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-1">{chamber.modelName}</h3>
-                        <p className="text-sm text-slate-400 mb-6 font-mono">SN: {chamber.serialNumber}</p>
+                        <h3 className="text-xl font-bold text-text-main mb-1">{chamber.modelName}</h3>
+                        <p className="text-sm text-text-muted mb-6 font-mono">SN: {chamber.serialNumber}</p>
 
                         <div className="grid grid-cols-2 gap-3">
                             <button
@@ -61,7 +61,7 @@ const MyChambers = () => {
                 ))}
 
                 {chambers.length === 0 && (
-                    <div className="col-span-3 text-center py-10 text-slate-500">
+                    <div className="col-span-3 text-center py-10 text-text-muted">
                         No chambers assigned to your customer account.
                     </div>
                 )}

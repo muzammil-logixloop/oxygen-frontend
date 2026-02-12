@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChamberDetails, reportIssue } from '../../services/opsService';
 import { AlertTriangle, ArrowLeft, Camera, CheckCircle } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const IssueReport = () => {
     const { chamberId } = useParams();
@@ -59,11 +60,13 @@ const IssueReport = () => {
         try {
             await reportIssue(data);
 
-            alert('Issue reported successfully. An engineer will be notified.');
+            toast.success('Issue reported successfully. An engineer will be notified.');
 
             navigate('/operator');
         } catch (err) {
-            setError(err?.response?.data?.message || 'Failed to report issue.');
+            const errorMessage = err?.response?.data?.message || 'Failed to report issue.';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -75,32 +78,32 @@ const IssueReport = () => {
         <div className="max-w-3xl mx-auto">
             <button
                 onClick={() => navigate(-1)}
-                className="text-slate-400 hover:text-white mb-4 flex items-center space-x-2"
+                className="text-text-muted hover:text-text-main mb-4 flex items-center space-x-2"
             >
                 <ArrowLeft size={20} />
                 <span>Back</span>
             </button>
 
-            <div className="bg-slate-800/50 border border-white/5 rounded-2xl p-8 border-l-4 border-l-red-500">
+            <div className="bg-surface border border-border rounded-2xl p-8 border-l-4 border-l-red-500 shadow-sm">
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-white mb-1 flex items-center space-x-2">
+                    <h1 className="text-2xl font-bold text-text-main mb-1 flex items-center space-x-2">
                         <AlertTriangle className="text-red-500" />
                         <span>Report Issue / Fault</span>
                     </h1>
-                    <p className="text-slate-400">
+                    <p className="text-text-muted">
                         {chamber.modelName} (SN: {chamber.serialNumber})
                     </p>
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/20 text-red-200 p-4 rounded-lg mb-6">
+                    <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 border border-red-200">
                         {error}
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                        <label className="block text-sm font-medium text-text-muted mb-2">
                             Issue Title
                         </label>
                         <input
@@ -109,7 +112,7 @@ const IssueReport = () => {
                             onChange={(e) =>
                                 setFormData({ ...formData, title: e.target.value })
                             }
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
+                            className="w-full bg-slate-50 border border-border rounded-xl px-4 py-3 text-text-main placeholder-slate-400"
                             placeholder="e.g., Door seal leaking"
                             required
                         />
@@ -117,7 +120,7 @@ const IssueReport = () => {
 
                     <div className="grid grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-2">
+                            <label className="block text-sm font-medium text-text-muted mb-2">
                                 Issue Category
                             </label>
 
@@ -126,7 +129,7 @@ const IssueReport = () => {
                                 onChange={(e) =>
                                     setFormData({ ...formData, category: e.target.value })
                                 }
-                                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
+                                className="w-full bg-slate-50 border border-border rounded-xl px-4 py-3 text-text-main"
                             >
                                 <option value="Leak">Leak</option>
                                 <option value="Zip">Zip</option>
@@ -141,7 +144,7 @@ const IssueReport = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-2">
+                            <label className="block text-sm font-medium text-text-muted mb-2">
                                 Severity Level
                             </label>
 
@@ -150,7 +153,7 @@ const IssueReport = () => {
                                 onChange={(e) =>
                                     setFormData({ ...formData, severity: e.target.value })
                                 }
-                                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white"
+                                className="w-full bg-slate-50 border border-border rounded-xl px-4 py-3 text-text-main"
                             >
                                 <option value="Info">Info</option>
                                 <option value="Minor">Minor</option>
@@ -163,7 +166,7 @@ const IssueReport = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                        <label className="block text-sm font-medium text-text-muted mb-2">
                             Detailed Description
                         </label>
 
@@ -175,13 +178,13 @@ const IssueReport = () => {
                                     description: e.target.value
                                 })
                             }
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white h-32 resize-none"
+                            className="w-full bg-slate-50 border border-border rounded-xl px-4 py-3 text-text-main h-32 resize-none placeholder-slate-400"
                             placeholder="Describe the problem in detail..."
                             required
                         />
                     </div>
 
-                    <div className="flex items-center space-x-3 bg-red-500/10 p-4 rounded-lg">
+                    <div className="flex items-center space-x-3 bg-red-50 p-4 rounded-lg border border-red-100">
                         <input
                             type="checkbox"
                             checked={formData.doNotOperateRecommended}
@@ -193,17 +196,17 @@ const IssueReport = () => {
                             }
                             className="h-5 w-5"
                         />
-                        <span className="text-red-200">
+                        <span className="text-red-700">
                             Recommend Do Not Operate until resolved
                         </span>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">
+                        <label className="block text-sm font-medium text-text-muted mb-2">
                             Upload Evidence (Photos / Videos)
                         </label>
 
-                        <div className="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center relative">
+                        <div className="border-2 border-dashed border-border rounded-xl p-8 text-center relative hover:bg-slate-50 transition-colors">
                             <input
                                 type="file"
                                 multiple
@@ -212,11 +215,11 @@ const IssueReport = () => {
                             />
 
                             {files.length > 0 ? (
-                                <div className="text-red-400 font-medium">
+                                <div className="text-red-600 font-medium">
                                     {files.length} file(s) selected
                                 </div>
                             ) : (
-                                <div className="text-slate-500 flex flex-col items-center">
+                                <div className="text-text-muted flex flex-col items-center">
                                     <Camera size={32} className="mb-2 opacity-50" />
                                     <span>Click to upload evidence</span>
                                 </div>

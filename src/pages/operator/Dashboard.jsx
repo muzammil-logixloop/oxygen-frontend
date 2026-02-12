@@ -10,8 +10,8 @@ const OperatorDashboard = () => {
     return (
         <div>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Operator</h1>
-                <p className="text-slate-400">Welcome back, {user?.username}.</p>
+                <h1 className="text-3xl font-bold text-text-main mb-2">Operator</h1>
+                <p className="text-text-muted">Welcome back, {user?.username}.</p>
             </div>
 
             {/* <MyChambers /> */}
