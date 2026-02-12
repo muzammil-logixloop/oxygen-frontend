@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, User as UserIcon, Menu, Bell } from 'lucide-react';
+import { LogOut, Bell } from 'lucide-react';
 
 const Header = () => {
     const { user, logout } = useAuth();
@@ -39,7 +39,6 @@ const Header = () => {
                 return [
                     { label: 'Dashboard', path: '/engineer' },
                     { label: 'My Issues', path: '/engineer/my-issues' },
-
                 ];
             default:
                 return [];
@@ -52,10 +51,16 @@ const Header = () => {
         <header className="bg-surface/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div className="flex items-center space-x-8">
-                    <Link to="/" className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
-                        OXYGENS
+                    {/* Logo */}
+                    <Link to="/">
+                        <img
+                            src="/logo1.png"
+                            alt="Oxygens Logo"
+                            className="h-20 w-auto object-contain"
+                        />
                     </Link>
 
+                    {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-1">
                         {navItems.map((item) => (
                             <Link
@@ -70,11 +75,13 @@ const Header = () => {
                 </div>
 
                 <div className="flex items-center space-x-6">
+                    {/* Notification Bell */}
                     <button className="text-text-muted hover:text-primary transition-colors relative">
                         <Bell size={20} />
                         <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                     </button>
 
+                    {/* User Info + Logout */}
                     <div className="flex items-center space-x-3 pl-6 border-l border-border">
                         <div className="text-right hidden sm:block">
                             <div className="text-sm font-medium text-text-main">{user.username}</div>

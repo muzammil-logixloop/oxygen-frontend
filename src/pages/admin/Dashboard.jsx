@@ -62,13 +62,13 @@ const Dashboard = () => {
                     <p className="text-sm text-text-muted">Add, remove, or modify user roles.</p>
                 </Link>
 
-                <div className="group p-6 bg-surface border-border border rounded-2xl hover:bg-slate-50 hover:border-purple-200 transition-all cursor-pointer shadow-sm">
+                {/* <div className="group p-6 bg-surface border-border border rounded-2xl hover:bg-slate-50 hover:border-purple-200 transition-all cursor-pointer shadow-sm">
                     <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-4 group-hover:scale-110 transition-transform">
                         <Database size={24} />
                     </div>
                     <h3 className="font-bold text-lg text-text-main mb-2">System Data</h3>
                     <p className="text-sm text-text-muted">Access raw data and logs.</p>
-                </div>
+                </div> */}
             </div>
         </div>
     );
