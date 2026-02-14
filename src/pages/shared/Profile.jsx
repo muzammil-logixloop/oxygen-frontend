@@ -68,7 +68,7 @@ const Profile = () => {
             </div>
 
             {message && (
-                <div className={`p-4 mb-6 rounded-lg border ${message.includes('success') ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600' : 'bg-red-500/10 border-red-500/50 text-red-500'}`}>
+                <div className={`p-4 mb-6 rounded-lg border ${message.includes('success') ? 'bg-blue-500/10 border-blue-500/50 text-blue-600' : 'bg-red-500/10 border-red-500/50 text-red-500'}`}>
                     {message}
                 </div>
             )}
@@ -105,7 +105,7 @@ const Profile = () => {
                         </div>
 
                         <h3 className="text-xl font-bold text-text-main">{user?.username}</h3>
-                        <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-semibold mt-2 border border-emerald-500/20">
+                        <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 text-xs font-semibold mt-2 border border-blue-500/20">
                             {user?.role}
                         </span>
                     </div>
@@ -125,7 +125,7 @@ const Profile = () => {
                                         type="text"
                                         value={user?.username || ''}
                                         disabled
-                                        className="w-full px-4 py-3 bg-emerald-50/50 border border-emerald-200 rounded-xl text-text-muted cursor-not-allowed"
+                                        className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl text-text-muted cursor-not-allowed"
                                     />
                                 </div>
                                 <div>
@@ -134,7 +134,7 @@ const Profile = () => {
                                         type="text"
                                         value={user?.email || 'N/A'} // Email not currently returned in user object but could be
                                         disabled
-                                        className="w-full px-4 py-3 bg-emerald-50/50 border border-emerald-200 rounded-xl text-text-muted cursor-not-allowed"
+                                        className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl text-text-muted cursor-not-allowed"
                                     />
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ const Profile = () => {
                                 <input
                                     type="text"
                                     disabled
-                                    className="w-full px-4 py-3 bg-emerald-50/50 border border-border rounded-xl text-text-muted cursor-not-allowed"
+                                    className="w-full px-4 py-3 bg-blue-50/50 border border-border rounded-xl text-text-muted cursor-not-allowed"
                                 />
                             </div>
 
@@ -152,7 +152,7 @@ const Profile = () => {
                                 <textarea
                                     value={formData.bio}
                                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                                    className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all h-32 resize-none"
+                                    className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all h-32 resize-none"
                                     placeholder="Tell us a bit about yourself..."
                                 />
                             </div>
@@ -160,7 +160,7 @@ const Profile = () => {
                             <div className="pt-4 flex justify-end">
                                 <button
                                     type="submit"
-                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center space-x-2"
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center space-x-2"
                                 >
                                     <Save size={20} />
                                     <span>Save Changes</span>

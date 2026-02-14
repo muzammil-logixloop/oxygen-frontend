@@ -51,13 +51,20 @@ const Header = () => {
         <header className="bg-surface/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div className="flex items-center space-x-8">
-                    {/* Logo */}
-                    <Link to="/">
+                    {/* Logo with hover popup */}
+                    <Link to="/" className="relative group">
                         <img
                             src="/logo1.png"
                             alt="Oxygens Logo"
-                            className="h-20 w-auto object-contain"
+                            className="h-12 w-auto object-contain transition-transform duration-300"
                         />
+                        <div className="absolute left-1/2 top-full -translate-x-1/2 mt-2 hidden group-hover:block z-50">
+                            <img
+                                src="/logo1.png"
+                                alt="Oxygens Logo Enlarged"
+                                className="h-32 w-auto object-contain rounded-lg shadow-lg"
+                            />
+                        </div>
                     </Link>
 
                     {/* Navigation Links */}

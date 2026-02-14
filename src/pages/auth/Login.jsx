@@ -61,14 +61,14 @@ const Login = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-text-muted ml-1">Email Address</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-emerald-600 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-blue-600 transition-colors">
                                     <Mail size={20} />
                                 </div>
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="name@company.com"
                                     required
                                 />
@@ -78,14 +78,14 @@ const Login = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-text-muted ml-1">Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-emerald-600 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-blue-600 transition-colors">
                                     <Lock size={20} />
                                 </div>
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="••••••••"
                                     required
                                 />
@@ -94,16 +94,16 @@ const Login = () => {
 
                         <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center text-text-muted cursor-pointer">
-                                <input type="checkbox" className="form-checkbox h-4 w-4 text-emerald-600 rounded border-border bg-white focus:ring-emerald-500 focus:ring-offset-white" />
+                                <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600 rounded border-border bg-white focus:ring-blue-500 focus:ring-offset-white" />
                                 <span className="ml-2">Remember me</span>
                             </label>
-                            <a href="#" className="text-emerald-600 hover:text-emerald-500 transition-colors">Forgot password?</a>
+                            <a href="#" className="text-blue-600 hover:text-blue-500 transition-colors">Forgot password?</a>
                         </div>
 
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -120,10 +120,10 @@ const Login = () => {
                     </form>
                 </div>
 
-                <div className="px-8 py-6 bg-emerald-50/50 border-t border-border text-center">
+                <div className="px-8 py-6 bg-blue-50/50 border-t border-border text-center">
                     <p className="text-text-muted">
                         Don't have an account?{' '}
-                        <Link to="/signup" className="text-emerald-600 hover:text-emerald-500 font-medium transition-colors hover:underline decoration-emerald-600/30 underline-offset-4">
+                        <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-medium transition-colors hover:underline decoration-blue-600/30 underline-offset-4">
                             Create Account
                         </Link>
                     </p>

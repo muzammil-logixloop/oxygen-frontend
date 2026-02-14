@@ -53,7 +53,7 @@ const MyChecklists = () => {
 
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl flex items-center space-x-2 transition-colors"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl flex items-center space-x-2 transition-colors"
           >
             <Eye size={18} />
             <span>{showDetails ? "Hide" : "View"}</span>
@@ -76,7 +76,7 @@ const MyChecklists = () => {
                   href={submission.videoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-emerald-400 flex items-center space-x-2 hover:underline"
+                  className="text-blue-400 flex items-center space-x-2 hover:underline"
                 >
                   <Film size={18} />
                   <span>View Uploaded Video</span>
@@ -115,7 +115,7 @@ const MyChecklists = () => {
                         href={r.attachmentUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-emerald-400 hover:underline flex items-center space-x-1"
+                        className="text-blue-400 hover:underline flex items-center space-x-1"
                       >
                         <Image size={16} />
                         <span>View</span>
@@ -148,7 +148,7 @@ const MyChecklists = () => {
       <div className="bg-surface border border-border rounded-2xl p-8 shadow-sm">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-text-main mb-1 flex items-center space-x-2">
-            <ClipboardList className="text-emerald-400" />
+            <ClipboardList className="text-blue-400" />
             <span>My Submitted Checklists</span>
           </h1>
           <p className="text-text-muted">

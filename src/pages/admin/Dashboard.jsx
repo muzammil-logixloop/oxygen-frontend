@@ -13,7 +13,7 @@ const Dashboard = () => {
 
                 const statsArray = [
                     { label: 'Total Users', value: data.userCount, color: 'text-text-main' },
-                    { label: 'Total Customers', value: data.customerCount, color: 'text-emerald-400' },
+                    { label: 'Total Customers', value: data.customerCount, color: 'text-blue-400' },
                     { label: 'Total Chambers', value: data.chamberCount, color: 'text-purple-400' },
                     { label: 'Suspended Chambers', value: data.suspendedChamberCount, color: 'text-red-400' },
                     { label: 'Open Issues', value: data.openIssuesCount, color: 'text-yellow-400' },
@@ -46,8 +46,8 @@ const Dashboard = () => {
 
             <h2 className="text-xl font-bold text-text-main mb-6">Admin Controls</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Link to="/admin/profile" className="group p-6 bg-surface border border-border rounded-2xl hover:bg-emerald-50 hover:border-emerald-200 transition-all cursor-pointer shadow-sm">
-                    <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 transition-transform">
+                <Link to="/admin/profile" className="group p-6 bg-surface border border-border rounded-2xl hover:bg-blue-50 hover:border-blue-200 transition-all cursor-pointer shadow-sm">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4 group-hover:scale-110 transition-transform">
                         <User size={24} />
                     </div>
                     <h3 className="font-bold text-lg text-text-main mb-2">My Profile</h3>

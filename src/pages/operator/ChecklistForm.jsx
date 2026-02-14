@@ -236,7 +236,7 @@ const ChecklistForm = () => {
                       onChange={e => handleAttachment(item.itemId, e.target.files[0])}
                     />
                     {attachments[item.itemId] ? (
-                      <div className="text-emerald-600 flex items-center justify-center gap-2">
+                      <div className="text-blue-600 flex items-center justify-center gap-2">
                         <CheckCircle size={18} />
                         {attachments[item.itemId].name}
                       </div>
@@ -302,7 +302,7 @@ const ChecklistForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl"
           >
             {loading ? 'Submitting...' : 'Submit Checklist'}
           </button>

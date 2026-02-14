@@ -141,7 +141,7 @@ const AdminIssues = () => {
 
   const statusColor = (status) =>
     ({
-      New: "bg-emerald-600 text-white",
+      New: "bg-blue-600 text-white",
       InProgress: "bg-yellow-500 text-black",
       Resolved: "bg-green-600 text-white",
       Closed: "bg-slate-500 text-white",
@@ -179,7 +179,7 @@ const AdminIssues = () => {
             setSearch(e.target.value);
             setCurrentPage(1);
           }}
-          className="flex-1 bg-slate-50 border border-border rounded-lg px-3 py-2 text-text-main focus:ring-2 focus:ring-emerald-500 outline-none"
+          className="flex-1 bg-slate-50 border border-border rounded-lg px-3 py-2 text-text-main focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
         <select

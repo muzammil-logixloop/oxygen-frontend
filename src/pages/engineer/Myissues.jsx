@@ -40,7 +40,7 @@ const MyIssues = () => {
       case "Minor":
         return "bg-yellow-50 text-yellow-700 border border-yellow-200";
       default:
-        return "bg-emerald-50 text-emerald-700 border border-emerald-200";
+        return "bg-blue-50 text-blue-700 border border-blue-200";
     }
   };
 
@@ -49,7 +49,7 @@ const MyIssues = () => {
       case "New":
         return <AlertTriangle className="text-yellow-600" />;
       case "InProgress":
-        return <Wrench className="text-emerald-600" />;
+        return <Wrench className="text-blue-600" />;
       case "Resolved":
         return <CheckCircle className="text-green-600" />;
       default:

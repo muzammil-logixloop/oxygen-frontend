@@ -82,7 +82,7 @@ const Users = () => {
                 </div>
                 <button
                     onClick={() => { setEditingUser(null); setShowModal(true); }}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
                 >
                     <Plus size={20} />
                     <span>Add User</span>
@@ -114,7 +114,7 @@ const Users = () => {
                                 <td className="p-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-bold border ${user.Role?.name === 'Oxygens Admin' ? 'bg-purple-50 text-purple-700 border-purple-200' :
                                         user.Role?.name === 'Engineer' ? 'bg-orange-50 text-orange-700 border-orange-200' :
-                                            'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                            'bg-blue-50 text-blue-700 border-blue-200'
                                         }`}>
                                         {user.Role?.name}
                                     </span>
@@ -197,7 +197,7 @@ const Users = () => {
 
                             <div className="flex justify-end space-x-3 pt-4">
                                 <button type="button" onClick={() => { setShowModal(false); setEditingUser(null); }} className="px-4 py-2 text-slate-400 hover:text-white">Cancel</button>
-                                <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold">{editingUser ? 'Update' : 'Create'}</button>
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">{editingUser ? 'Update' : 'Create'}</button>
                             </div>
                         </form>
                     </div>

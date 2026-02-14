@@ -42,7 +42,7 @@ const Signup = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background p-4">
                 <div className="max-w-md w-full bg-surface rounded-2xl shadow-2xl border border-border p-8 text-center animate-fade-in">
-                    <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                         <CheckCircle size={32} />
                     </div>
                     <h2 className="text-2xl font-bold text-text-main mb-2">Success!</h2>
@@ -75,7 +75,7 @@ const Signup = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-text-muted ml-1">Username</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
                                     <User size={20} />
                                 </div>
                                 <input
@@ -83,7 +83,7 @@ const Signup = () => {
                                     name="username"
                                     value={formData.username}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="Choose a username"
                                     required
                                 />
@@ -93,7 +93,7 @@ const Signup = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-text-muted ml-1">Email Address</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
                                     <Mail size={20} />
                                 </div>
                                 <input
@@ -101,7 +101,7 @@ const Signup = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="name@company.com"
                                     required
                                 />
@@ -111,7 +111,7 @@ const Signup = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-text-muted ml-1">Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-400 transition-colors">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-400 transition-colors">
                                     <Lock size={20} />
                                 </div>
                                 <input
@@ -119,7 +119,7 @@ const Signup = () => {
                                     name="password"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
+                                    className="w-full pl-10 pr-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-text-main placeholder-slate-400 transition-all shadow-sm"
                                     placeholder="Create a strong password"
                                     required
                                 />
@@ -129,7 +129,7 @@ const Signup = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                         >
                             {isLoading ? (
                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -146,10 +146,10 @@ const Signup = () => {
                     </form>
                 </div>
 
-                <div className="px-8 py-6 bg-emerald-50/50 border-t border-border text-center">
+                <div className="px-8 py-6 bg-blue-50/50 border-t border-border text-center">
                     <p className="text-text-muted">
                         Already have an account?{' '}
-                        <Link to="/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors hover:underline decoration-emerald-400/50 underline-offset-4">
+                        <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors hover:underline decoration-blue-400/50 underline-offset-4">
                             Sign In
                         </Link>
                     </p>

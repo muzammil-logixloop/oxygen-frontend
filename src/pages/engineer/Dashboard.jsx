@@ -19,8 +19,8 @@ const Dashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Link to="/engineer/profile" className="group p-6 bg-surface border border-border rounded-2xl hover:bg-emerald-50 hover:border-emerald-200 transition-all cursor-pointer shadow-sm">
-                    <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 transition-transform">
+                <Link to="/engineer/profile" className="group p-6 bg-surface border border-border rounded-2xl hover:bg-blue-50 hover:border-blue-200 transition-all cursor-pointer shadow-sm">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4 group-hover:scale-110 transition-transform">
                         <User size={24} />
                     </div>
                     <h3 className="font-bold text-lg text-text-main mb-2">My Profile</h3>

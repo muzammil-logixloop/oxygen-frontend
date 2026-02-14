@@ -83,7 +83,7 @@ const Chambers = () => {
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
                 >
                     <Plus size={20} />
                     <span>Add Chamber</span>
@@ -92,12 +92,12 @@ const Chambers = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {chambers.map(chamber => (
-                    <div key={chamber.id} className="bg-surface border border-border p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-200 transition-all">
+                    <div key={chamber.id} className="bg-surface border border-border p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
                         <div className="flex items-start justify-between mb-4">
-                            <div className="bg-emerald-50 p-3 rounded-lg text-emerald-600">
+                            <div className="bg-blue-50 p-3 rounded-lg text-blue-600">
                                 <Box size={24} />
                             </div>
-                            <span className={`text-xs px-2 py-1 rounded border ${chamber.warrantyStatus === 'Active' ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'text-red-700 border-red-200 bg-red-50'}`}>
+                            <span className={`text-xs px-2 py-1 rounded border ${chamber.warrantyStatus === 'Active' ? 'text-blue-700 border-blue-200 bg-blue-50' : 'text-red-700 border-red-200 bg-red-50'}`}>
                                 {chamber.warrantyStatus}
                             </span>
                         </div>
@@ -181,7 +181,7 @@ const Chambers = () => {
 
                             <div className="flex justify-end space-x-3 pt-4">
                                 <button type="button" onClick={() => { setShowModal(false); setEditingChamber(null); }} className="px-4 py-2 text-slate-400 hover:text-white">Cancel</button>
-                                <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold">{editingChamber ? 'Update' : 'Create'}</button>
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">{editingChamber ? 'Update' : 'Create'}</button>
                             </div>
                         </form>
                     </div>
