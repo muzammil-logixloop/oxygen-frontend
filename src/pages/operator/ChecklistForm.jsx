@@ -21,7 +21,7 @@ const ChecklistForm = () => {
   const [signatureName, setSignatureName] = useState('');
   const [declarationAccepted, setDeclarationAccepted] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ loader state
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -34,15 +34,19 @@ const ChecklistForm = () => {
 
   const loadChamber = async () => {
     try {
+      setLoading(true); // show loader while fetching
       const data = await getChamberDetails(chamberId);
       setChamber(data);
     } catch {
       setError('Failed to load chamber details');
+    } finally {
+      setLoading(false);
     }
   };
 
   const loadTemplate = async () => {
     try {
+      setLoading(true); // show loader while fetching template
       const data = await getChecklistTemplate(type);
       setTemplate(data);
       setResponses({});
@@ -51,6 +55,8 @@ const ChecklistForm = () => {
       setVideoPreview(null);
     } catch {
       setError('Failed to load checklist template');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,7 +116,7 @@ const ChecklistForm = () => {
 
     if (!validateBeforeSubmit()) return;
 
-    setLoading(true);
+    setLoading(true); // show loader during submit
 
     try {
       const formData = new FormData();
@@ -127,19 +133,15 @@ const ChecklistForm = () => {
           template.ChecklistItems.map(item => ({
             itemId: item.itemId,
             result: responses[item.itemId],
-            notes: '' // add notes if needed
+            notes: ''
           }))
         )
       );
 
-
       Object.entries(attachments).forEach(([itemId, file]) => {
-        // Send each file under its itemId key
         formData.append(`attachments[${itemId}]`, file);
       });
 
-
-      // Video
       if (video) {
         formData.append('videoUpload', video);
       }
@@ -162,7 +164,16 @@ const ChecklistForm = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto relative">
+      {/* 🔄 Full-page loader overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-text-muted text-sm">{loading ? 'Processing...' : ''}</p>
+          </div>
+        </div>
+      )}
 
       <button onClick={() => navigate(-1)} className="text-text-muted hover:text-text-main mb-4 flex items-center space-x-2">
         <ArrowLeft size={20} />
@@ -170,7 +181,6 @@ const ChecklistForm = () => {
       </button>
 
       <div className="bg-surface border border-border rounded-2xl p-8 shadow-sm">
-
         <div className="flex justify-between items-start mb-6">
           <div>
             <h1 className="text-2xl font-bold text-text-main mb-1">{type} Checklist</h1>
@@ -196,10 +206,8 @@ const ChecklistForm = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
           {template.ChecklistItems.map(item => (
             <div key={item.itemId} className="p-5 bg-slate-50 rounded-xl border border-border">
-
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="text-text-main font-semibold">{item.title}</h3>
@@ -306,7 +314,6 @@ const ChecklistForm = () => {
           >
             {loading ? 'Submitting...' : 'Submit Checklist'}
           </button>
-
         </form>
       </div>
     </div>

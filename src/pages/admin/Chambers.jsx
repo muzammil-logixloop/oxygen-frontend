@@ -7,10 +7,11 @@ const Chambers = () => {
     const [chambers, setChambers] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [editingChamber, setEditingChamber] = useState(null); // NEW: track editing chamber
+    const [editingChamber, setEditingChamber] = useState(null);
     const [formData, setFormData] = useState({
         serialNumber: '', modelName: '', customerId: '', installationDate: '', warrantyExpiryDate: ''
     });
+    const [loading, setLoading] = useState(false); // ✅ loader state
 
     useEffect(() => {
         loadData();
@@ -18,18 +19,21 @@ const Chambers = () => {
 
     const loadData = async () => {
         try {
+            setLoading(true); // show loader
             const [chambersData, customersData] = await Promise.all([getChambers(), getCustomers()]);
             setChambers(chambersData);
             setCustomers(customersData);
         } catch (error) {
             console.error('Error loading data:', error);
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
-    // Handle create or update
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true); // show loader during create/update
             if (editingChamber) {
                 await updateChamber(editingChamber.id, formData);
                 toast.success('Chamber updated successfully');
@@ -40,14 +44,15 @@ const Chambers = () => {
             setShowModal(false);
             setEditingChamber(null);
             setFormData({ serialNumber: '', modelName: '', customerId: '', installationDate: '', warrantyExpiryDate: '' });
-            loadData();
+            await loadData();
         } catch (error) {
             console.error('Error saving chamber:', error);
             toast.error('Failed to save chamber');
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
-    // Handle edit
     const handleEdit = (chamber) => {
         setEditingChamber(chamber);
         setFormData({
@@ -60,22 +65,35 @@ const Chambers = () => {
         setShowModal(true);
     };
 
-    // Handle delete
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this chamber?')) {
             try {
+                setLoading(true); // show loader during delete
                 await deleteChamber(id);
                 toast.success('Chamber deleted successfully');
-                loadData();
+                await loadData();
             } catch (error) {
                 console.error('Error deleting chamber:', error);
                 toast.error('Failed to delete chamber');
+            } finally {
+                setLoading(false); // hide loader
             }
         }
     };
 
     return (
-        <div>
+        <div className="relative">
+
+            {/* Full-page loader */}
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-text-muted text-sm">Processing...</p>
+                    </div>
+                </div>
+            )}
+
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-text-main mb-2">Chambers</h1>

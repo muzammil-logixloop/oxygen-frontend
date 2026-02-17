@@ -10,6 +10,7 @@ const Customers = () => {
         name: '', address: '', contactPerson: '', contactEmail: '', contactPhone: ''
     });
     const [editingId, setEditingId] = useState(null);
+    const [loading, setLoading] = useState(false); // ✅ Loader state
 
     useEffect(() => {
         loadCustomers();
@@ -17,10 +18,13 @@ const Customers = () => {
 
     const loadCustomers = async () => {
         try {
+            setLoading(true); // show loader while loading
             const data = await getCustomers();
             setCustomers(data);
         } catch (error) {
             console.error('Error loading customers:', error);
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
@@ -45,6 +49,7 @@ const Customers = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true); // loader during API call
             if (editingId) {
                 await updateCustomer(editingId, formData);
                 toast.success('Customer updated successfully');
@@ -55,28 +60,44 @@ const Customers = () => {
             setShowModal(false);
             setFormData({ name: '', address: '', contactPerson: '', contactEmail: '', contactPhone: '' });
             setEditingId(null);
-            loadCustomers();
+            await loadCustomers();
         } catch (error) {
             console.error('Error saving customer:', error);
             toast.error('Failed to save customer');
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this customer?')) {
             try {
+                setLoading(true); // loader during delete
                 await deleteCustomer(id);
                 toast.success('Customer deleted successfully');
-                loadCustomers();
+                await loadCustomers();
             } catch (error) {
                 console.error('Error deleting customer:', error);
                 toast.error('Failed to delete customer');
+            } finally {
+                setLoading(false); // hide loader
             }
         }
     };
 
     return (
-        <div>
+        <div className="relative">
+
+            {/* Full-page loader */}
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-text-muted text-sm">Processing...</p>
+                    </div>
+                </div>
+            )}
+
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-text-main mb-2">Customers</h1>
@@ -98,7 +119,6 @@ const Customers = () => {
                             <div className="bg-blue-50 p-3 rounded-lg text-blue-600">
                                 <Building size={24} />
                             </div>
-                            {/* <span className="text-xs font-mono text-slate-500">ID: {customer.id}</span> */}
                         </div>
                         <h3 className="text-xl font-bold text-text-main mb-2">{customer.name}</h3>
                         <div className="space-y-2 text-sm text-text-muted">
@@ -119,7 +139,6 @@ const Customers = () => {
                                 <span>{customer.contactPhone}</span>
                             </div>
                         </div>
-                        {/* Action Buttons */}
                         <div className="absolute top-4 right-4 flex space-x-2">
                             <button onClick={() => openEditModal(customer)} className="text-slate-400 hover:text-yellow-400">
                                 <Edit2 size={18} />

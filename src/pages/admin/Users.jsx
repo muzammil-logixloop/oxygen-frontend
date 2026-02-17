@@ -8,6 +8,7 @@ const Users = () => {
     const [customers, setCustomers] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState(null); // ✅ Track editing user
+    const [loading, setLoading] = useState(false); // ✅ Loader state
     const [formData, setFormData] = useState({
         username: '', email: '', password: '', role: 'Operator', customerId: ''
     });
@@ -18,11 +19,14 @@ const Users = () => {
 
     const loadData = async () => {
         try {
+            setLoading(true); // Show loader when loading data
             const [usersData, customersData] = await Promise.all([getUsers(), getCustomers()]);
             setUsers(usersData);
             setCustomers(customersData);
         } catch (error) {
             console.error('Error loading data:', error);
+        } finally {
+            setLoading(false); // Hide loader after data loaded
         }
     };
 
@@ -30,33 +34,37 @@ const Users = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true); // Show loader while API call
             if (editingUser) {
-                // Update existing user
                 await updateUser(editingUser.id, formData);
+                toast.success('User updated successfully');
             } else {
-                // Create new user
                 await createUser(formData);
                 toast.success('User created successfully');
             }
             setShowModal(false);
             setEditingUser(null);
             setFormData({ username: '', email: '', password: '', role: 'Operator', customerId: '' });
-            loadData();
-            if (editingUser) toast.success('User updated successfully');
+            await loadData();
         } catch (error) {
             toast.error('Operation failed: ' + (error.response?.data?.message || error.message));
+        } finally {
+            setLoading(false); // Hide loader after API call
         }
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
+                setLoading(true); // Show loader while deleting
                 await deleteUser(id);
                 toast.success('User deleted successfully');
-                loadData();
+                await loadData();
             } catch (error) {
                 console.error('Error deleting user:', error);
                 toast.error('Failed to delete user');
+            } finally {
+                setLoading(false); // Hide loader after delete
             }
         }
     };
@@ -74,7 +82,18 @@ const Users = () => {
     };
 
     return (
-        <div>
+        <div className="relative">
+
+            {/* Full-page loader */}
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-text-muted text-sm">Processing...</p>
+                    </div>
+                </div>
+            )}
+
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-text-main mb-2">Users</h1>
@@ -129,7 +148,6 @@ const Users = () => {
                                         <Edit3 size={18} />
                                     </button>
                                     <button
-                                    // ✅ Add delete functionality
                                         onClick={() => handleDelete(user.id)}
                                         className="text-slate-500 hover:text-red-400 transition-colors"
                                         title="Delete User"
@@ -178,8 +196,6 @@ const Users = () => {
                                 required
                             >
                                 <option value="Operator">Customer</option>
-                                {/* <option value="Site Manager">Site Manager</option> */}
-                                {/* <option value="Engineer">Engineer</option> */}
                                 <option value="Oxygens Admin">Admin</option>
                             </select>
 

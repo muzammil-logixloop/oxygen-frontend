@@ -7,17 +7,18 @@ const OperatorDashboard = () => {
   const { user } = useAuth();
 
   const [customer, setCustomer] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // ✅ Loader state
   const [error, setError] = useState(null);
 
   const fetchCustomer = async () => {
     try {
+      setLoading(true); // show loader while fetching
       const response = await getMyCustomer();
       setCustomer(response.data);
     } catch (err) {
       setError("Failed to load customer.");
     } finally {
-      setLoading(false);
+      setLoading(false); // hide loader
     }
   };
 
@@ -40,14 +41,16 @@ const OperatorDashboard = () => {
   );
 
   return (
-    <div className="p-6 md:p-12">
-      {/* Header */}
-      {/* <div className="mb-8">
-        <h1 className="text-4xl font-bold text-text-main mb-2">Dashboard</h1>
-        <p className="text-text-muted text-lg">
-          Welcome back, <span className="font-semibold">{user?.username}</span>.
-        </p>
-      </div> */}
+    <div className="p-6 md:p-12 relative">
+      {/* 🔄 Full-page loader overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-text-muted text-sm">Loading customer...</p>
+          </div>
+        </div>
+      )}
 
       {/* Customer Card */}
       <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-xl max-w-3xl mx-auto">
@@ -55,9 +58,8 @@ const OperatorDashboard = () => {
           Customer Information
         </h2>
 
-        {loading && <p className="text-text-muted">Loading customer...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {!loading && !customer && (
+        {!loading && !customer && !error && (
           <p className="text-text-muted">No customer assigned.</p>
         )}
 

@@ -14,6 +14,7 @@ const ITEMS_PER_PAGE = 10;
 
 const AdminIssues = () => {
   const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(false); // ✅ Loader state
 
   /* ==============================
      🔽 COMMENTED ASSIGNMENT STATES
@@ -27,24 +28,31 @@ const AdminIssues = () => {
   /* ==============================
      🔽 FILTER + PAGINATION STATES
   ============================== */
-
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [severityFilter, setSeverityFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch issues
+  /* ==============================
+     🔽 FETCH ISSUES
+  ============================== */
   const fetchIssues = async () => {
     try {
+      setLoading(true); // show loader while fetching
       const res = await axios.get("/ops/issues/my");
       setIssues(res.data);
     } catch (err) {
       console.error("Error fetching issues:", err);
+      toast.error("Failed to load issues");
+    } finally {
+      setLoading(false); // hide loader
     }
   };
 
+  /* ==============================
+     🔽 COMMENTED FETCH ENGINEERS
+  ============================== */
   /*
-  // Fetch engineers
   const fetchEngineers = async () => {
     try {
       const res = await axios.get("/admin/users/engineers");
@@ -60,8 +68,10 @@ const AdminIssues = () => {
     // fetchEngineers();
   }, []);
 
+  /* ==============================
+     🔽 COMMENTED ASSIGN ENGINEER
+  ============================== */
   /*
-  // Assign engineer
   const handleAssign = async (issueId) => {
     const val = selectedEngineer[issueId];
     if (!val) return;
@@ -71,13 +81,10 @@ const AdminIssues = () => {
 
     try {
       setAssigning({ ...assigning, [issueId]: true });
-
       await axios.post("/ops/issues/assign", { issueId, engineerId });
-
       fetchIssues();
       setShowAssignPanel({ ...showAssignPanel, [issueId]: false });
       setSelectedEngineer({ ...selectedEngineer, [issueId]: "" });
-
       toast.success("Engineer assigned successfully");
     } catch (err) {
       console.error("Error assigning engineer:", err);
@@ -105,20 +112,15 @@ const AdminIssues = () => {
   /* ==============================
      🔎 FILTERING LOGIC
   ============================== */
-
   const filteredIssues = useMemo(() => {
     return issues.filter((issue) => {
       const matchesSearch =
         issue.title?.toLowerCase().includes(search.toLowerCase()) ||
         issue.issueId?.toString().includes(search);
 
-      const matchesStatus = statusFilter
-        ? issue.status === statusFilter
-        : true;
+      const matchesStatus = statusFilter ? issue.status === statusFilter : true;
 
-      const matchesSeverity = severityFilter
-        ? issue.severity === severityFilter
-        : true;
+      const matchesSeverity = severityFilter ? issue.severity === severityFilter : true;
 
       return matchesSearch && matchesStatus && matchesSeverity;
     });
@@ -127,9 +129,7 @@ const AdminIssues = () => {
   /* ==============================
      📄 PAGINATION LOGIC
   ============================== */
-
   const totalPages = Math.ceil(filteredIssues.length / ITEMS_PER_PAGE);
-
   const paginatedIssues = filteredIssues.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
@@ -138,7 +138,6 @@ const AdminIssues = () => {
   /* ==============================
      🎨 UI HELPERS
   ============================== */
-
   const statusColor = (status) =>
     ({
       New: "bg-blue-600 text-white",
@@ -155,7 +154,17 @@ const AdminIssues = () => {
     }[severity] || "bg-slate-400 text-black");
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
+      {/* 🔄 Loader Overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-text-muted text-sm">Loading issues...</p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold text-text-main">
@@ -163,9 +172,7 @@ const AdminIssues = () => {
         </h1>
         <span className="text-sm text-text-muted mt-2 md:mt-0">
           Total Issues:{" "}
-          <strong className="text-text-main">
-            {filteredIssues.length}
-          </strong>
+          <strong className="text-text-main">{filteredIssues.length}</strong>
         </span>
       </div>
 
@@ -220,11 +227,8 @@ const AdminIssues = () => {
               <th className="px-4 py-3 text-left text-text-main">ID / Title</th>
               <th className="px-4 py-3 text-left text-text-main">Chamber</th>
               <th className="px-4 py-3 text-left text-text-main">Reported By</th>
-              {/* <th className="px-4 py-3 text-left text-text-main">Assigned To</th> */}
               <th className="px-4 py-3 text-left text-text-main">Severity</th>
               <th className="px-4 py-3 text-left text-text-main">Status</th>
-
-              {/* <th className="px-4 py-3 text-left text-text-main">Action</th> */}
             </tr>
           </thead>
 
@@ -232,12 +236,8 @@ const AdminIssues = () => {
             {paginatedIssues.map((issue) => (
               <tr key={issue.issueId} className="hover:bg-slate-50 transition">
                 <td className="px-4 py-3">
-                  <div className="font-semibold text-text-main">
-                    {issue.title}
-                  </div>
-                  <div className="text-xs text-text-muted">
-                    ID: {issue.issueId}
-                  </div>
+                  <div className="font-semibold text-text-main">{issue.title}</div>
+                  <div className="text-xs text-text-muted">ID: {issue.issueId}</div>
                 </td>
 
                 <td className="px-4 py-3 text-text-main">
@@ -250,10 +250,6 @@ const AdminIssues = () => {
                 <td className="px-4 py-3 text-text-main">
                   {issue.creator?.username || issue.createdByName || "-"}
                 </td>
-
-                {/* <td className="px-4 py-3 text-text-main">
-                  {issue.engineer?.username || "Unassigned"}
-                </td> */}
 
                 <td className="px-4 py-3">
                   <span
@@ -274,13 +270,6 @@ const AdminIssues = () => {
                     {issue.status}
                   </span>
                 </td>
-
-                {/*
-                <td className="px-4 py-3 space-y-2">
-                  // 🔥 FULL ASSIGNMENT UI COMMENTED
-                  // Original assignment select + confirm button was here
-                </td>
-                */}
               </tr>
             ))}
           </tbody>
