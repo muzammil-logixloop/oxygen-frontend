@@ -1,30 +1,69 @@
+/*
+
+@theme {
+  --color-primary: #4fc3f7;
+  /* Blue 600 */
+  /* --color-background: #4fc3f7;
+  /* Slate 50 */
+  /* --color-surface: #4fc3f7; */
+  /* White */
+
+  /* Comprehensive blue Theme */
+  /* --color-primary: #4fc3f7; */
+  /* blue 500 */
+  /* --color-primary-hover: #059669; */
+  /* blue 600 */
+
+  /* --color-background: #ecfdf5; */
+  /* blue 50 (Minty background) */
+  /* --color-surface: #ffffff; */
+  /* White */
+
+  /* --color-text-main: #064e3b; */
+  /* blue 900 */
+  /* --color-text-muted: #374151; */
+  /* Gray 700 */
+  /* --color-border: #a7f3d0; */
+  /* blue 200 */
+
+/* Custom Base Styles */
+/* body {
+  font-family: 'Inter', system-ui, sans-serif;
+  @apply bg-background text-text-main;
+  min-height: 100vh;
+}
+
+
+/* Scrollbar for Webkit */
+/* ::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded;
+}  */
+
+
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2563eb;
-  /* Blue 600 */
-  --color-background: #f8fafc;
-  /* Slate 50 */
-  --color-surface: #ffffff;
-  /* White */
+  /* Primary Colors (Blue Gradient) */
+  --color-primary: #5ac8fa;       /* Light blue (matches left part of the logo) */
+  --color-primary-hover: #1e3a8a; /* Dark blue (matches right part of the logo) */
 
-  /* Comprehensive Emerald Theme */
-  --color-primary: #10b981;
-  /* Emerald 500 */
-  --color-primary-hover: #059669;
-  /* Emerald 600 */
+ --color-background: #e0f7ff; /* Very light bluish background */
+  --color-surface: #ffffff;    /* White cards and surfaces */
 
-  --color-background: #ecfdf5;
-  /* Emerald 50 (Minty background) */
-  --color-surface: #ffffff;
-  /* White */
+  /* Text Colors */
+  --color-text-main: #0a2540;   /* Dark blue for main text */
+  --color-text-muted: #475569;  /* Grayish blue for muted text */
 
-  --color-text-main: #064e3b;
-  /* Emerald 900 */
-  --color-text-muted: #374151;
-  /* Gray 700 */
-  --color-border: #a7f3d0;
-  /* Emerald 200 */
+  /* Borders */
+  --color-border: #a3d8f4;      /* Soft blue for borders */
 }
 
 /* Custom Base Styles */

@@ -10,6 +10,7 @@ const Customers = () => {
         name: '', address: '', contactPerson: '', contactEmail: '', contactPhone: ''
     });
     const [editingId, setEditingId] = useState(null);
+    const [loading, setLoading] = useState(false); // ✅ Loader state
 
     useEffect(() => {
         loadCustomers();
@@ -17,10 +18,13 @@ const Customers = () => {
 
     const loadCustomers = async () => {
         try {
+            setLoading(true); // show loader while loading
             const data = await getCustomers();
             setCustomers(data);
         } catch (error) {
             console.error('Error loading customers:', error);
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
@@ -45,6 +49,7 @@ const Customers = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true); // loader during API call
             if (editingId) {
                 await updateCustomer(editingId, formData);
                 toast.success('Customer updated successfully');
@@ -55,28 +60,44 @@ const Customers = () => {
             setShowModal(false);
             setFormData({ name: '', address: '', contactPerson: '', contactEmail: '', contactPhone: '' });
             setEditingId(null);
-            loadCustomers();
+            await loadCustomers();
         } catch (error) {
             console.error('Error saving customer:', error);
             toast.error('Failed to save customer');
+        } finally {
+            setLoading(false); // hide loader
         }
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this customer?')) {
             try {
+                setLoading(true); // loader during delete
                 await deleteCustomer(id);
                 toast.success('Customer deleted successfully');
-                loadCustomers();
+                await loadCustomers();
             } catch (error) {
                 console.error('Error deleting customer:', error);
                 toast.error('Failed to delete customer');
+            } finally {
+                setLoading(false); // hide loader
             }
         }
     };
 
     return (
-        <div>
+        <div className="relative">
+
+            {/* Full-page loader */}
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-text-muted text-sm">Processing...</p>
+                    </div>
+                </div>
+            )}
+
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-text-main mb-2">Customers</h1>
@@ -84,7 +105,7 @@ const Customers = () => {
                 </div>
                 <button
                     onClick={openAddModal}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-all"
                 >
                     <Plus size={20} />
                     <span>Add Customer</span>
@@ -93,12 +114,11 @@ const Customers = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {customers.map(customer => (
-                    <div key={customer.id} className="bg-surface border border-border p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-200 transition-all relative">
+                    <div key={customer.id} className="bg-surface border border-border p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all relative">
                         <div className="flex items-start justify-between mb-4">
-                            <div className="bg-emerald-50 p-3 rounded-lg text-emerald-600">
+                            <div className="bg-blue-50 p-3 rounded-lg text-blue-600">
                                 <Building size={24} />
                             </div>
-                            {/* <span className="text-xs font-mono text-slate-500">ID: {customer.id}</span> */}
                         </div>
                         <h3 className="text-xl font-bold text-text-main mb-2">{customer.name}</h3>
                         <div className="space-y-2 text-sm text-text-muted">
@@ -119,7 +139,6 @@ const Customers = () => {
                                 <span>{customer.contactPhone}</span>
                             </div>
                         </div>
-                        {/* Action Buttons */}
                         <div className="absolute top-4 right-4 flex space-x-2">
                             <button onClick={() => openEditModal(customer)} className="text-slate-400 hover:text-yellow-400">
                                 <Edit2 size={18} />
@@ -168,7 +187,7 @@ const Customers = () => {
                             />
                             <div className="flex justify-end space-x-3 pt-4">
                                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-slate-400 hover:text-white">Cancel</button>
-                                <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold">
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
                                     {editingId ? 'Update' : 'Create'}
                                 </button>
                             </div>
