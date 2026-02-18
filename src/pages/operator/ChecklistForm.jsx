@@ -21,7 +21,7 @@ const ChecklistForm = () => {
   const [signatureName, setSignatureName] = useState('');
   const [declarationAccepted, setDeclarationAccepted] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // loading state for both data fetching and form submission
   const [error, setError] = useState('');
 
   useEffect(() => {
