@@ -20,7 +20,7 @@ const Header = () => {
                 return [
                     { label: 'Dashboard', path: '/operator' },
                     { label: 'Chambers', path: '/operator/checklists' },
-                    { label: 'Checklists', path: '/operator/submissions' },
+                    { label: 'History', path: '/operator/submissions' },
                 ];
             case 'Site Manager':
                 return [

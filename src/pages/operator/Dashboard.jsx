@@ -99,7 +99,7 @@ const OperatorDashboard = () => {
         )}
 
         {/* Operator info under customer */}
-        {customer && (
+        {/* {customer && (
           <div className="mt-8 pt-6 border-t border-gray-200">
             <h3 className="text-xl font-semibold text-text-main mb-4">
               Operator
@@ -114,7 +114,7 @@ const OperatorDashboard = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

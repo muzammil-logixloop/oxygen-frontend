@@ -149,7 +149,7 @@ const MyChecklists = () => {
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-text-main mb-1 flex items-center space-x-2">
             <ClipboardList className="text-blue-400" />
-            <span>My Submitted Checklists</span>
+            <span>My Submitted History</span>
           </h1>
           <p className="text-text-muted">
             View a detailed history of all checklists you have submitted
