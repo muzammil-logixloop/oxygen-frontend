@@ -172,7 +172,7 @@ const Users = () => {
                         : "bg-blue-50 text-blue-700 border-blue-200"
                     }`}
                   >
-                    {user.Role?.name}
+                    {user.Role?.name === "Operator" ? "customer" : user.Role?.name}
                   </span>
                 </td>
 
