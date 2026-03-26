@@ -97,7 +97,7 @@ const Login = () => {
                                 <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600 rounded border-border bg-white focus:ring-blue-500 focus:ring-offset-white" />
                                 <span className="ml-2">Remember me</span>
                             </label>
-                            <a href="#" className="text-blue-600 hover:text-blue-500 transition-colors">Forgot password?</a>
+                           {/*  <a href="#" className="text-blue-600 hover:text-blue-500 transition-colors">Forgot password?</a> */}
                         </div>
 
                         <button
@@ -121,12 +121,12 @@ const Login = () => {
                 </div>
 
                 <div className="px-8 py-6 bg-blue-50/50 border-t border-border text-center">
-                    <p className="text-text-muted">
+                   {/*  <p className="text-text-muted">
                         Don't have an account?{' '}
                         <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-medium transition-colors hover:underline decoration-blue-600/30 underline-offset-4">
                             Create Account
                         </Link>
-                    </p>
+                    </p> */}
                 </div>
 
             </div>
