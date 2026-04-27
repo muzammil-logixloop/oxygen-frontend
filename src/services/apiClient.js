@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5000/api', // Adjust if backend runs on different port
+    baseURL: 'https://oxygen.logixloop.com/api', // Added /api to match Nginx proxy
     headers: {
         'Content-Type': 'application/json',
     },

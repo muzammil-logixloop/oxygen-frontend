@@ -83,10 +83,10 @@ const Header = () => {
 
                 <div className="flex items-center space-x-6">
                     {/* Notification Bell */}
-                    <button className="text-text-muted hover:text-primary transition-colors relative">
+                   {/*  <button className="text-text-muted hover:text-primary transition-colors relative">
                         <Bell size={20} />
                         <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
+                    </button> */}
 
                     {/* User Info + Logout */}
                     <div className="flex items-center space-x-3 pl-6 border-l border-border">

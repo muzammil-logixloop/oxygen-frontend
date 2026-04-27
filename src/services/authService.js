@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from './apiClient'; // corrected file name
 
 export const loginUser = async (email, password) => {
     const response = await apiClient.post('/auth/login', { email, password });
@@ -13,7 +13,7 @@ export const signupUser = async (username, email, password) => {
 export const getMe = async () => {
     const response = await apiClient.get('/auth/me');
     return response.data;
-}
+};
 
 export const logoutUser = () => {
     localStorage.removeItem('token');
